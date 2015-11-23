@@ -28,7 +28,7 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 
-app.use('/js/client/modules',browserify( __dirname + '/public/js/client/modules'));
+//app.use('/js/client/modules',browserify( __dirname + '/public/js/client/modules'));
 app.get('/js/client/bundle.js', browserify(['underscore', 'jquery', 'backbone', 'backbone.marionette']));
 
 
