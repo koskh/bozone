@@ -1,8 +1,8 @@
 'use strict';
 
-var Model = require ('../model/model');
-var template = require ('../template/template.ejs');
-
+var Model = require ('./model/model');
+var template = require ('./template/template.ejs');
+//
 var App =  Marionette.Application.extend({
     regions: {
         mainRegion: '#container'
@@ -27,8 +27,6 @@ var View = Marionette.ItemView.extend({
 var view = new View({
     //el: "#containe
 });
-
-//view.render();
+//
+////view.render();
 app.mainRegion.show(view);
-
-debugger;
