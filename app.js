@@ -28,9 +28,8 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 
-app.use('/js/client/greeting/',browserify( __dirname + '/develop/client/greeting/', {external: ['underscore'],  transform: 'jstify'}));
-app.get('/js/client/bundle.js', browserify(['underscore', 'jquery', 'backbone', 'backbone.marionette']));
-
+app.get('/js/bundle.js', browserify(['underscore', 'jquery', 'backbone', 'backbone.marionette']));
+app.use('/js/modules/', browserify( __dirname + '/modules/', {external: ['underscore'],  transform: 'jstify'}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
