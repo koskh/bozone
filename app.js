@@ -28,7 +28,7 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 
-app.get('/js/bundle.js', browserify(['underscore', 'jquery', 'backbone', 'backbone.marionette']));
+app.use('/js/bundle.js', browserify(['underscore', 'jquery', 'backbone', 'backbone.marionette']));
 app.use('/js/modules/', browserify( __dirname + '/modules/', {external: ['underscore'],  transform: 'jstify'}));
 
 app.use(express.static(path.join(__dirname, 'public')));
