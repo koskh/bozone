@@ -24,6 +24,7 @@ app.use(cookieParser());
 app.use(require('node-sass-middleware')({
   src: path.join(__dirname),
   dest: path.join(__dirname, 'public'),
+  //outputStyle: 'compressed',
   indentedSyntax: true,
   sourceMap: true
 }));
