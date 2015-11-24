@@ -13,6 +13,11 @@ module.exports = Backbone.Collection.extend({
         this._fillMonth(options.date || new Date());
     },
 
+    /**
+     * Заполнение месяца днями
+     * @param dateString строка даты, на месяц и год которой заполняем календарь
+     * @private
+     */
     _fillMonth: function(dateString) {
         var date = new Date(this._parseDateString(dateString));
 
@@ -25,25 +30,29 @@ module.exports = Backbone.Collection.extend({
         var firstMonthsDate = 1; //always 1
         var lastMonthsDate = new Date(year, month + 1 , 0).getDate();
 
-        /* days before month */
-        var sunday =  0; // sunday from Date.getDay()
-        var daysBeforeSunday = 6;
+        var sunday =  0; // sunday из Date.getDay()
+        var daysBeforeSunday = 6; // неделя начинается с понедельника
+        var daysAfterSunday = 0; // неделя заканчив воскресен
+
+        /* дни предыдущ месяца */
         var firstDay = (new Date(year, month, firstMonthsDate)).getDay();
         var daysBeforeFirstDay =  firstDay === sunday ? daysBeforeSunday : firstDay -1 ;
 
-        for( var daysBefore = daysBeforeFirstDay -1; daysBefore >= 0; daysBefore--) { //daysBeforeFirstDay -1 тк 0 - это последн день пред месяца
+        for( var daysBefore = daysBeforeFirstDay -1; daysBefore >= 0; daysBefore--) { // `daysBeforeFirstDay -1` т.к. 0 - это последн день пред месяца
             this.add(new DayModel({date: new Date(year, month, -daysBefore)}));
         }
 
-        debugger;
-
-        /* days of month */
+        /* дни месяца */
         for (var date = 1; date <= lastMonthsDate; date++) {
             this.add(new DayModel({date: new Date(year, month, date)}));
         }
 
-        /* days after month */
-
+        /* дни после следущ месяца */
+        var lastDay = (new Date(year, month, lastMonthsDate)).getDay();
+        var daysAfterLastDay = lastDay === sunday ? daysAfterSunday : 7 - lastDay;
+        for (var daysAfter = 1; daysAfter <= daysAfterLastDay; daysAfter++) {
+            this.add(new DayModel({date: new Date(year, month + 1, daysAfter)}));
+        }
     },
     _parseDateString: function(dateString) {
         var ms = Date.parse(dateString);
