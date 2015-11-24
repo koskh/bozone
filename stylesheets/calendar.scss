@@ -1,0 +1,12 @@
+.calendar {
+   &__day {
+     float:left;
+     width: 14%;
+   }
+   &__day:nth-child(7n) {
+     color: red;
+   }
+  //&__day:nth-child(7n):after {
+  //  content: "%%%%%%";
+  //}
+}

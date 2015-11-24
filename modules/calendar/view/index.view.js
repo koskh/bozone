@@ -10,9 +10,9 @@ module.exports = Marionette.CompositeView.extend({
 
     childView: DayView,
 
-    itemViewContainer: "tbody",
+    childViewContainer: ".calendar__body",
 
-    attachHtml: function(collectionView, childView, index) {
-        debugger;
-    }
+    //attachHtml: function(collectionView, childView, index) {
+    //    debugger;
+    //}
 });

@@ -21,12 +21,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(require('node-sass-middleware')({
-  src: path.join(__dirname),
+  src: path.join(__dirname, ''),
   dest: path.join(__dirname, 'public'),
   //outputStyle: 'compressed',
-  indentedSyntax: true,
-  sourceMap: true
+  sourceMap: true,
+  //debug: true
 }));
 
 app.use('/js/bundle.js', browserify(['underscore', 'jquery', 'backbone', 'backbone.marionette']));
