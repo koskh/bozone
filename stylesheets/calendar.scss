@@ -1,15 +1,29 @@
 .calendar {
   width: 300px;
+  padding: 1em;
+  border: solid 1px gray;
+
+  &:after {
+    height: 0;
+    display: block;
+    clear: both;
+    visibility: hidden;
+    content: "clearfix";
+  }
+
+   &__header {
+     text-align: center;
+   }
 
    &__day {
      float:left;
      width: 14%;
+     text-align: center;
+     line-height: 2em;
    }
-  
+
    &__day:nth-child(7n) {
      color: red;
    }
-  //&__day:nth-child(7n):after {
-  //  content: "%%%%%%";
-  //}
+
 }
