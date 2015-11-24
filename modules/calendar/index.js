@@ -12,3 +12,5 @@ var indexView = new IndexView({
 });
 
 indexView.render();
+
+debugger;

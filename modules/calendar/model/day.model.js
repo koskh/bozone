@@ -5,5 +5,8 @@ module.exports = Backbone.Model.extend({
         date: null,
         isActive: false,
         type: null
+    },
+    getDate: function() {
+        return this.get('date').toString()
     }
 })
