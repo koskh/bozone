@@ -1,8 +1,11 @@
 .calendar {
+  width: 300px;
+
    &__day {
      float:left;
      width: 14%;
    }
+  
    &__day:nth-child(7n) {
      color: red;
    }
