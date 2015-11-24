@@ -7,10 +7,10 @@ var month = new Month();
 
 var IndexView = require('./view/index.view');
 var indexView = new IndexView({
-    collection: month,
-    el: '#calendar'
+    el: '#calendar',
+
+    collection: month
+
 });
 
 indexView.render();
-
-debugger;

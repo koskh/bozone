@@ -54,6 +54,7 @@ module.exports = Backbone.Collection.extend({
             this.add(new DayModel({date: new Date(year, month + 1, daysAfter)}));
         }
     },
+
     _parseDateString: function(dateString) {
         var ms = Date.parse(dateString);
         if(isNaN(ms)) { throw new Error(''); }
