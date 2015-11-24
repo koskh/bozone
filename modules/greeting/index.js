@@ -6,7 +6,8 @@ var template = require ('./template/template.ejs');
 //
 var App =  Marionette.Application.extend({
     regions: {
-        mainRegion: '#container'
+        mainRegion: '#container',
+        calendarRegion: '#calendar'
     },
     initialize: function() {
         console.log('module is initialized');
@@ -14,10 +15,8 @@ var App =  Marionette.Application.extend({
 });
 
 var app = new App();
-
 var model = new Model();
-
 var view = new View({model: model });
-
-
 app.mainRegion.show(view);
+
+
