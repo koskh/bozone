@@ -27,14 +27,19 @@ module.exports = Marionette.CompositeView.extend({
         'nextMonthBtn': '.js-next-month'
     },
 
-    events : {
+    childEvents: {
+        'day:click': '_dayClickHandler'
+    },
+
+    collectionEvents: {
+        'reset': '_collectionResetHandler'
+    },
+
+    events: {
         'click @ui.prevMonthBtn': '_prevMonthHandler',
         'click @ui.nextMonthBtn': '_nextMonthHandler'
     },
 
-    collectionEvents : {
-        'reset': '_collectionResetHandler'
-    },
 
     onRender: function() {
         this._collectionResetHandler(); // обновляем заголовок при загрузке
@@ -49,5 +54,10 @@ module.exports = Marionette.CompositeView.extend({
     _collectionResetHandler: function() {
         this.ui.month.html(languageResource[locale].months[this.collection.date.getMonth()]);
         this.ui.year.html(this.collection.date.getFullYear());
+    },
+
+    _dayClickHandler: function(childView) {
+        console.log(childView.getDate());
     }
+
 });
