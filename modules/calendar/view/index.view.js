@@ -8,14 +8,21 @@ var locale = window.locale || '[ru-RU]';
 var DayView = require('./day.view');
 var template = require('../template/index.ejs');
 
+var Month = require ('../collection/month.collection');
+var month = new Month();
+
 module.exports = Marionette.CompositeView.extend({
     template: template,
+
+    collection: month,
 
     childView: DayView,
 
     childViewContainer: ".calendar__body",
 
     ui: {
+        'month': '.js-header-month',
+        'year': '.js-header-year',
         'prevMonthBtn': '.js-prev-month',
         'nextMonthBtn': '.js-next-month'
     },
@@ -29,12 +36,16 @@ module.exports = Marionette.CompositeView.extend({
         'reset': '_collectionResetHandler'
     },
 
-    templateHelpers : function() {
-        return {
-            month: languageResourse[locale].months[this.collection.date.getMonth()],
-            year: this.collection.date.getFullYear()
-        }
+    onRender: function() {
+        this._collectionResetHandler(); // обновляем заголовок при загрузке
     },
+
+    //templateHelpers : function() {
+    //    return {
+    //        month: languageResourse[locale].months[this.collection.date.getMonth()],
+    //        year: this.collection.date.getFullYear()
+    //    }
+    //},
 
     _prevMonthHandler: function() {
         this.collection.prevMonth();
@@ -43,6 +54,7 @@ module.exports = Marionette.CompositeView.extend({
         this.collection.nextMonth();
     },
     _collectionResetHandler: function() {
-        this.render();
+        this.ui.month.html(languageResourse[locale].months[this.collection.date.getMonth()]);
+        this.ui.year.html(this.collection.date.getFullYear());
     }
 });

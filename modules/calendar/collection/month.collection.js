@@ -23,12 +23,12 @@ module.exports = Backbone.Collection.extend({
     _fillMonth: function(dateString) {
         var date = new Date(this._parseDateString(dateString));
 
+        var daysArrayForCollection = []; // для заполнения коллекции
+
         /* что бы не путаться с днями недели, числами дней
            day -> monday.. sunday
            date -> 1 ..30
          */
-        var daysArrayForCollection = [];
-
         var year = date.getFullYear();
         var month = date.getMonth();
         var firstMonthsDate = 1; //always 1
@@ -43,13 +43,11 @@ module.exports = Backbone.Collection.extend({
         var daysBeforeFirstDay =  firstDay === sunday ? daysBeforeSunday : firstDay -1 ;
 
         for( var daysBefore = daysBeforeFirstDay -1; daysBefore >= 0; daysBefore--) { // `daysBeforeFirstDay -1` т.к. 0 - это последн день пред месяца
-            //this.add(new DayModel({date: new Date(year, month, -daysBefore)}));
             daysArrayForCollection.push( new DayModel({date: new Date(year, month, -daysBefore)}));
         }
 
         /* дни месяца */
         for (var date = 1; date <= lastMonthsDate; date++) {
-            //this.add(new DayModel({date: new Date(year, month, date)}));
             daysArrayForCollection.push(new DayModel({date: new Date(year, month, date)}));
         }
 
@@ -57,7 +55,6 @@ module.exports = Backbone.Collection.extend({
         var lastDay = (new Date(year, month, lastMonthsDate)).getDay();
         var daysAfterLastDay = lastDay === sunday ? daysAfterSunday : 7 - lastDay;
         for (var daysAfter = 1; daysAfter <= daysAfterLastDay; daysAfter++) {
-            //this.add(new DayModel({date: new Date(year, month + 1, daysAfter)}));
             daysArrayForCollection.push(new DayModel({date: new Date(year, month + 1, daysAfter)}));
         }
 
