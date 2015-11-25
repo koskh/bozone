@@ -57,12 +57,6 @@ module.exports = Backbone.Collection.extend({
         }
     },
 
-    templateHelpers : function() {
-        return {
-            month: this.date.getMonth()
-        }
-    },
-
     _parseDateString: function(dateString) {
         var ms = Date.parse(dateString);
         if(isNaN(ms)) { throw new Error(''); }
