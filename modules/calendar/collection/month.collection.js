@@ -60,7 +60,8 @@ module.exports = Backbone.Collection.extend({
             daysArrayForCollection.push(new DayModel({date: new Date(year, month + 1, daysAfter)}));
         }
 
-        this.reset(daysArrayForCollection);
+        this.date = date;
+        this.reset(daysArrayForCollection); // rest event обрабатывается родителем, сменяя заголовок календаря
     },
 
     _parseDateString: function(dateString) {
@@ -70,15 +71,13 @@ module.exports = Backbone.Collection.extend({
     },
 
     prevMonth: function() {
-        //this.reset();
-        this.date = this._getAdjacentMonth('prev', this.date);
-        this._fillMonth(this.date);
+        var date = this._getAdjacentMonth('prev', this.date);
+        this._fillMonth(date);
     },
 
     nextMonth: function() {
-        //this.reset();
-        this.date = this._getAdjacentMonth('next', this.date);
-        this._fillMonth(this.date);
+        var date = this._getAdjacentMonth('next', this.date);
+        this._fillMonth(date);
     },
 
     _getAdjacentMonth: function (action, date) {
