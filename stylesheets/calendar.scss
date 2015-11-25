@@ -23,10 +23,14 @@
        background: gray;
        margin: 1px;
        cursor: pointer;
+
+       &.is-active {
+           background: lightsteelblue;
+       }
    }
 
    &__day:nth-child(7n) {
-     color: red;
+     color: yellow;
    }
 
 }

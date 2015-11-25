@@ -5,11 +5,13 @@ var template = require('../template/day.ejs');
 module.exports = Marionette.ItemView.extend({
     template: template,
 
-    className:'calendar__day',
+    className: function() {
+        return this.model.get('isActive') ? 'calendar__day is-active' : 'calendar__day'; // для раскраски активных дней в активные цвета
+    },
 
     templateHelpers: function() {
         return {
-            day: this.model.getDate()
+            date: this.model.getDate()
         }
     },
 

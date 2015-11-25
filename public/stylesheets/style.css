@@ -25,7 +25,9 @@ a {
     background: gray;
     margin: 1px;
     cursor: pointer; }
+    .calendar__day.is-active {
+      background: lightsteelblue; }
   .calendar__day:nth-child(7n) {
-    color: red; }
+    color: yellow; }
 
 /*# sourceMappingURL=style.css.map */
