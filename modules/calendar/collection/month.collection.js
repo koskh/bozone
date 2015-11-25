@@ -7,6 +7,7 @@ module.exports = Backbone.Collection.extend({
 
     model: DayModel,
 
+    date: null, // объект Date текущего ("рабочего") месяца
 
     initialize: function (options) {
         options = {} || options;

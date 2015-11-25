@@ -1,6 +1,6 @@
 'use strict';
 
-var languageResourse = require ('../localization/index');
+var languageResource = require ('../localization/index');
 var locale = window.locale || '[ru-RU]';
 
 //var MonthCollection = require('../collection/month.collection');
@@ -40,13 +40,6 @@ module.exports = Marionette.CompositeView.extend({
         this._collectionResetHandler(); // обновляем заголовок при загрузке
     },
 
-    //templateHelpers : function() {
-    //    return {
-    //        month: languageResourse[locale].months[this.collection.date.getMonth()],
-    //        year: this.collection.date.getFullYear()
-    //    }
-    //},
-
     _prevMonthHandler: function() {
         this.collection.prevMonth();
     },
@@ -54,7 +47,7 @@ module.exports = Marionette.CompositeView.extend({
         this.collection.nextMonth();
     },
     _collectionResetHandler: function() {
-        this.ui.month.html(languageResourse[locale].months[this.collection.date.getMonth()]);
+        this.ui.month.html(languageResource[locale].months[this.collection.date.getMonth()]);
         this.ui.year.html(this.collection.date.getFullYear());
     }
 });
