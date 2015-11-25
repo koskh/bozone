@@ -7,10 +7,12 @@ module.exports = Backbone.Collection.extend({
 
     model: DayModel,
 
+
     initialize: function (options) {
         options = {} || options;
+        this.date = options.date || new Date();
 
-        this._fillMonth(options.date || new Date());
+        this._fillMonth(this.date);
     },
 
     /**
@@ -52,6 +54,12 @@ module.exports = Backbone.Collection.extend({
         var daysAfterLastDay = lastDay === sunday ? daysAfterSunday : 7 - lastDay;
         for (var daysAfter = 1; daysAfter <= daysAfterLastDay; daysAfter++) {
             this.add(new DayModel({date: new Date(year, month + 1, daysAfter)}));
+        }
+    },
+
+    templateHelpers : function() {
+        return {
+            month: this.date.getMonth()
         }
     },
 

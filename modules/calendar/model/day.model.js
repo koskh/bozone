@@ -6,7 +6,7 @@ module.exports = Backbone.Model.extend({
         isActive: false,
         type: null
     },
-    getDay: function() {
+    getDate: function() {
         return this.get('date').getDate();
     }
 })

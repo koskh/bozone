@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "build:scripts": "browserify --external 'underscore' -t jstify ./develop/client/greeting/view/veiw.js  > ./public/js/client/greeting.js",
-    "build:scripts:greeting": "browserify --external 'underscore' -t jstify ./develop/client/greeting/index.js  > ./public/js/client/modules/greeting.js"
+    "build:scripts:greeting": "browserify --external 'underscore' -t jstify ./develop/client/localization/index.js  > ./public/js/client/modules/localization/index.js"
   },
   "dependencies": {
     "backbone": "^1.2.3",

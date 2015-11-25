@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var browserify = require('browserify-middleware');
+var sass = require('node-sass-middleware');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -22,7 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(require('node-sass-middleware')({
+app.use(sass({
   src: path.join(__dirname, ''),
   dest: path.join(__dirname, 'public'),
   //outputStyle: 'compressed',

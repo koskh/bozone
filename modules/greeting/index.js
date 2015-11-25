@@ -18,5 +18,3 @@ var app = new App();
 var model = new Model();
 var view = new View({model: model });
 app.mainRegion.show(view);
-
-
