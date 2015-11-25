@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "build:scripts": "browserify --external 'underscore' -t jstify ./develop/client/greeting/view/veiw.js  > ./public/js/client/greeting.js"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "backbone": "^1.2.3",

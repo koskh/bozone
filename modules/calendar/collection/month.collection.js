@@ -33,40 +33,41 @@ module.exports = Backbone.Collection.extend({
          */
         var year = date.getFullYear();
         var month = date.getMonth();
-        var firstMonthsDate = 1; //always 1
         var lastMonthsDate = new Date(year, month + 1 , 0).getDate();
 
         var sunday =  0; // sunday из Date.getDay()
         var daysBeforeSunday = 6; // неделя начинается с понедельника
         var daysAfterSunday = 0; // неделя заканчив воскресен
 
-        /* дни предыдущ месяца */
-        var firstDay = (new Date(year, month, firstMonthsDate)).getDay();
+        /* заполн дни предыдущ месяца */
+        var firstDay = (new Date(year, month, 1)).getDay();
         var daysBeforeFirstDay =  firstDay === sunday ? daysBeforeSunday : firstDay - 1 ;
 
-        for ( var daysBefore = daysBeforeFirstDay - 1; daysBefore >= 0; daysBefore-- ) { // `daysBeforeFirstDay -1` т.к. 0 - это последн день пред месяца
-            daysArrayForCollection.push( new DayModel({date: new Date(year, month, -daysBefore)}));
+        for ( var d = daysBeforeFirstDay - 1; d >= 0; d-- ) { // `daysBeforeFirstDay -1` т.к. 0 - это последн день пред месяца
+            daysArrayForCollection.push( new DayModel({date: new Date(year, month, -d)}));
         }
 
-        /* дни месяца */
-        for (var daysMonth = 1; daysMonth <= lastMonthsDate; daysMonth++) {
-            daysArrayForCollection.push(new DayModel({date: new Date(year, month, daysMonth), isActive: true}));
+        /* заполн дни месяца */
+        for ( d = 1; d <= lastMonthsDate; d++) {
+            daysArrayForCollection.push(new DayModel({date: new Date(year, month, d), isActive: true}));
         }
 
-        /* дни после следущ месяца */
+        /* заполн дни после следущ месяца */
         var lastDay = (new Date(year, month, lastMonthsDate)).getDay();
         var daysAfterLastDay = lastDay === sunday ? daysAfterSunday : 7 - lastDay;
-        for (var daysAfter = 1; daysAfter <= daysAfterLastDay; daysAfter++) {
-            daysArrayForCollection.push(new DayModel({date: new Date(year, month + 1, daysAfter)}));
+        for ( d = 1; d <= daysAfterLastDay; d++) {
+            daysArrayForCollection.push(new DayModel({date: new Date(year, month + 1, d)}));
         }
 
         this.date = date;
-        this.reset(daysArrayForCollection); // rest event обрабатывается родителем, сменяя заголовок календаря
+        this.reset(daysArrayForCollection); // reset event обрабатывается родителем, сменяя заголовок календаря
     },
 
     _parseDateString: function(dateString) {
         var ms = Date.parse(dateString);
-        if(isNaN(ms)) { throw new Error(''); }
+        if (isNaN(ms)) {
+            throw new Error('');
+        }
         return ms;
     },
 
