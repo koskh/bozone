@@ -6,7 +6,7 @@ a {
   color: #00B7FF; }
 
 .calendar {
-  width: 300px;
+  width: 280px;
   padding: 1em;
   border: solid 1px gray; }
   .calendar:after {
@@ -19,9 +19,12 @@ a {
     text-align: center; }
   .calendar__day {
     float: left;
-    width: 14%;
+    width: 13.5%;
     text-align: center;
-    line-height: 2em; }
+    line-height: 2em;
+    background: gray;
+    margin: 1px;
+    cursor: pointer; }
   .calendar__day:nth-child(7n) {
     color: red; }
 

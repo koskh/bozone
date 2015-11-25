@@ -49,8 +49,8 @@ module.exports = Backbone.Collection.extend({
         }
 
         /* дни месяца */
-        for (var date = 1; date <= lastMonthsDate; date++) {
-            daysArrayForCollection.push(new DayModel({date: new Date(year, month, date)}));
+        for (var daysMonth = 1; daysMonth <= lastMonthsDate; daysMonth++) {
+            daysArrayForCollection.push(new DayModel({date: new Date(year, month, daysMonth)}));
         }
 
         /* дни после следущ месяца */
