@@ -19,5 +19,13 @@
   "trailing": true,
   "undef": true,
   "unused": true,
-  "white": true
+  "white": true,
+
+  "globals": {
+    "jQuery": true,
+    "$": true,
+    "Backbone": true,
+    "_": true,
+    "Marionette":true
+  }
 }
