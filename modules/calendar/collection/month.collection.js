@@ -18,6 +18,7 @@ module.exports = Backbone.Collection.extend({
 
     /**
      * Заполнение месяца днями
+     * Запонение = дни перед 1 числом + числа месяца + числа следущ месяца
      * @param dateString строка даты, на месяц и год которой заполняем календарь
      * @private
      */
@@ -41,9 +42,9 @@ module.exports = Backbone.Collection.extend({
 
         /* дни предыдущ месяца */
         var firstDay = (new Date(year, month, firstMonthsDate)).getDay();
-        var daysBeforeFirstDay =  firstDay === sunday ? daysBeforeSunday : firstDay -1 ;
+        var daysBeforeFirstDay =  firstDay === sunday ? daysBeforeSunday : firstDay - 1 ;
 
-        for( var daysBefore = daysBeforeFirstDay -1; daysBefore >= 0; daysBefore--) { // `daysBeforeFirstDay -1` т.к. 0 - это последн день пред месяца
+        for ( var daysBefore = daysBeforeFirstDay - 1; daysBefore >= 0; daysBefore-- ) { // `daysBeforeFirstDay -1` т.к. 0 - это последн день пред месяца
             daysArrayForCollection.push( new DayModel({date: new Date(year, month, -daysBefore)}));
         }
 

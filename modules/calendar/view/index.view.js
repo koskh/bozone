@@ -40,7 +40,6 @@ module.exports = Marionette.CompositeView.extend({
         'click @ui.nextMonthBtn': '_nextMonthHandler'
     },
 
-
     onRender: function() {
         this._collectionResetHandler(); // обновляем заголовок при загрузке
     },

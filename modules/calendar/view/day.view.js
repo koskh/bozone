@@ -7,7 +7,7 @@ module.exports = Marionette.ItemView.extend({
 
     className:'calendar__day',
 
-    templateHelpers : function() {
+    templateHelpers: function() {
         return {
             day: this.model.getDate()
         }
