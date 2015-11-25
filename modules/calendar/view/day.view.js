@@ -9,7 +9,7 @@ module.exports = Marionette.ItemView.extend({
         return this.model.get('isActive') ? 'calendar__day is-active' : 'calendar__day'; // для раскраски активных дней в активные цвета
     },
 
-    templateHelpers: function() {
+    templateHelpers() {
         return {
             date: this.model.getDate()
         }
@@ -19,11 +19,11 @@ module.exports = Marionette.ItemView.extend({
         'click': '_clickHandler'
     },
 
-    getDate: function() {
+    getDate() {
         return this.model.get('date');
     },
 
-    _clickHandler: function() {
+    _clickHandler() {
         this.trigger('day:click');
     }
 });

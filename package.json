@@ -16,6 +16,7 @@
     "express": "~4.13.1",
     "jquery": "^2.1.4",
     "jstify": "^0.13.0",
+    "localize": "^0.4.7",
     "morgan": "~1.6.1",
     "node-sass-middleware": "0.8.0",
     "serve-favicon": "~2.3.0",

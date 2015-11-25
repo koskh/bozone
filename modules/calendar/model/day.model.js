@@ -7,7 +7,7 @@ module.exports = Backbone.Model.extend({
         type: null
     },
 
-    getDate: function() {
+    getDate() {
         return this.get('date').getDate();
     }
 })

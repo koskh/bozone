@@ -40,22 +40,22 @@ module.exports = Marionette.CompositeView.extend({
         'click @ui.nextMonthBtn': '_nextMonthHandler'
     },
 
-    onRender: function() {
+    onRender() {
         this._collectionResetHandler(); // обновляем заголовок при загрузке
     },
 
-    _prevMonthHandler: function() {
+    _prevMonthHandler() {
         this.collection.prevMonth();
     },
-    _nextMonthHandler: function() {
+    _nextMonthHandler() {
         this.collection.nextMonth();
     },
-    _collectionResetHandler: function() {
+    _collectionResetHandler() {
         this.ui.month.html(languageResource[locale].months[this.collection.date.getMonth()]);
         this.ui.year.html(this.collection.date.getFullYear());
     },
 
-    _dayClickHandler: function(childView) {
+    _dayClickHandler(childView) {
         console.log(childView.getDate());
     }
 

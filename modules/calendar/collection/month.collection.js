@@ -22,7 +22,7 @@ module.exports = Backbone.Collection.extend({
      * @param dateString строка даты, на месяц и год которой заполняем календарь
      * @private
      */
-    _fillMonth: function(dateString) {
+    _fillMonth(dateString) {
         var date = new Date(this._parseDateString(dateString));
 
         var daysArrayForCollection = []; // для заполнения коллекции
@@ -63,7 +63,7 @@ module.exports = Backbone.Collection.extend({
         this.reset(daysArrayForCollection); // reset event обрабатывается родителем, сменяя заголовок календаря
     },
 
-    _parseDateString: function(dateString) {
+    _parseDateString(dateString) {
         var ms = Date.parse(dateString);
         if (isNaN(ms)) {
             throw new Error('');
@@ -71,17 +71,17 @@ module.exports = Backbone.Collection.extend({
         return ms;
     },
 
-    prevMonth: function() {
+    prevMonth() {
         var date = this._getAdjacentMonth('prev', this.date);
         this._fillMonth(date);
     },
 
-    nextMonth: function() {
+    nextMonth() {
         var date = this._getAdjacentMonth('next', this.date);
         this._fillMonth(date);
     },
 
-    _getAdjacentMonth: function (action, date) {
+    _getAdjacentMonth(action, date) {
         var adjacentMonth = {
             'prev': function(date) {
                 return date.getMonth() === 0 ?  new Date(date.getFullYear() - 1, 11, 1) : new Date(date.getFullYear(), date.getMonth() - 1, 1);
