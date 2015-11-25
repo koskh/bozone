@@ -15,10 +15,27 @@ module.exports = Marionette.CompositeView.extend({
 
     childViewContainer: ".calendar__body",
 
+    ui: {
+        'prevMonthBtn': '.js-prev-month',
+        'nextMonthBtn': '.js-next-month'
+    },
+
+    events : {
+        'click @ui.prevMonthBtn': '_prevMonthHandler',
+        'click @ui.nextMonthBtn': '_nextMonthHandler'
+    },
+
     templateHelpers : function() {
         return {
             month: languageResourse[locale].months[this.collection.date.getMonth()],
             year: this.collection.date.getFullYear()
         }
     },
+
+    _prevMonthHandler: function() {
+        this.collection.prevMonth();
+    },
+    _nextMonthHandler: function() {
+        this.collection.nextMonth();
+    }
 });

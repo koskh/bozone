@@ -61,6 +61,32 @@ module.exports = Backbone.Collection.extend({
         var ms = Date.parse(dateString);
         if(isNaN(ms)) { throw new Error(''); }
         return ms;
+    },
+
+    prevMonth: function() {
+        this.reset();
+        this.date = this._getAdjacentMonth('prev', this.date);
+        this._fillMonth(this.date);
+    },
+
+    nextMonth: function() {
+        this.reset();
+        this.date = this._getAdjacentMonth('next', this.date);
+        this._fillMonth(this.date);
+    },
+
+    _getAdjacentMonth: function (action, date) {
+        var adjacentMonth = {
+            'prev': function(date) {
+                return date.getMonth() === 0 ?  new Date(date.getFullYear() - 1, 11, 1) : new Date(date.getFullYear(), date.getMonth() - 1, 1);
+            },
+            'next': function(date) {
+                return date.getMonth() === 11 ? new Date(date.getFullYear() + 1, 0, 1) : new Date(date.getFullYear(), date.getMonth() + 1, 1);
+            }
+        };
+
+        return adjacentMonth[action](date);
     }
+
 });
 
