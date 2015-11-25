@@ -27,6 +27,8 @@ module.exports = Backbone.Collection.extend({
            day -> monday.. sunday
            date -> 1 ..30
          */
+        var daysArrayForCollection = [];
+
         var year = date.getFullYear();
         var month = date.getMonth();
         var firstMonthsDate = 1; //always 1
@@ -41,20 +43,25 @@ module.exports = Backbone.Collection.extend({
         var daysBeforeFirstDay =  firstDay === sunday ? daysBeforeSunday : firstDay -1 ;
 
         for( var daysBefore = daysBeforeFirstDay -1; daysBefore >= 0; daysBefore--) { // `daysBeforeFirstDay -1` т.к. 0 - это последн день пред месяца
-            this.add(new DayModel({date: new Date(year, month, -daysBefore)}));
+            //this.add(new DayModel({date: new Date(year, month, -daysBefore)}));
+            daysArrayForCollection.push( new DayModel({date: new Date(year, month, -daysBefore)}));
         }
 
         /* дни месяца */
         for (var date = 1; date <= lastMonthsDate; date++) {
-            this.add(new DayModel({date: new Date(year, month, date)}));
+            //this.add(new DayModel({date: new Date(year, month, date)}));
+            daysArrayForCollection.push(new DayModel({date: new Date(year, month, date)}));
         }
 
         /* дни после следущ месяца */
         var lastDay = (new Date(year, month, lastMonthsDate)).getDay();
         var daysAfterLastDay = lastDay === sunday ? daysAfterSunday : 7 - lastDay;
         for (var daysAfter = 1; daysAfter <= daysAfterLastDay; daysAfter++) {
-            this.add(new DayModel({date: new Date(year, month + 1, daysAfter)}));
+            //this.add(new DayModel({date: new Date(year, month + 1, daysAfter)}));
+            daysArrayForCollection.push(new DayModel({date: new Date(year, month + 1, daysAfter)}));
         }
+
+        this.reset(daysArrayForCollection);
     },
 
     _parseDateString: function(dateString) {
@@ -64,13 +71,13 @@ module.exports = Backbone.Collection.extend({
     },
 
     prevMonth: function() {
-        this.reset();
+        //this.reset();
         this.date = this._getAdjacentMonth('prev', this.date);
         this._fillMonth(this.date);
     },
 
     nextMonth: function() {
-        this.reset();
+        //this.reset();
         this.date = this._getAdjacentMonth('next', this.date);
         this._fillMonth(this.date);
     },

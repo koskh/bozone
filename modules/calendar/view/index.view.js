@@ -25,6 +25,10 @@ module.exports = Marionette.CompositeView.extend({
         'click @ui.nextMonthBtn': '_nextMonthHandler'
     },
 
+    collectionEvents : {
+        'reset': '_collectionResetHandler'
+    },
+
     templateHelpers : function() {
         return {
             month: languageResourse[locale].months[this.collection.date.getMonth()],
@@ -37,5 +41,8 @@ module.exports = Marionette.CompositeView.extend({
     },
     _nextMonthHandler: function() {
         this.collection.nextMonth();
+    },
+    _collectionResetHandler: function() {
+        this.render();
     }
 });
