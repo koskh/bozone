@@ -1,6 +1,5 @@
 'use strict';
 
-//var _  = require ('underscore');
 var DayModel = require('../model/day.model');
 
 module.exports = Backbone.Collection.extend({
