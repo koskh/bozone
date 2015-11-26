@@ -27,7 +27,7 @@ a {
     cursor: pointer; }
     .calendar__day--weekdays {
       background: lightpink;
-      cursor: none; }
+      cursor: auto; }
     .calendar__day.is-active {
       background: lightsteelblue; }
   .calendar__day:nth-child(7n) {
