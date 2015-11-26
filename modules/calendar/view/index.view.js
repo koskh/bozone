@@ -1,6 +1,6 @@
 'use strict';
 
-var languageResource = require ('../localization/index');
+var localize = window.localize || require ('../localization/index');
 var locale = window.locale || '[ru-RU]';
 
 //var MonthCollection = require('../collection/month.collection');
@@ -27,6 +27,12 @@ module.exports = Marionette.CompositeView.extend({
         'nextMonthBtn': '.js-next-month'
     },
 
+    templateHelpers() {
+        return {
+            weekDays: localize[locale].shortDays
+        };
+    },
+
     childEvents: {
         'day:click': '_dayClickHandler'
     },
@@ -51,7 +57,7 @@ module.exports = Marionette.CompositeView.extend({
         this.collection.nextMonth();
     },
     _collectionResetHandler() {
-        this.ui.month.html(languageResource[locale].months[this.collection.date.getMonth()]);
+        this.ui.month.html(localize[locale].fullMonths[this.collection.date.getMonth()]);
         this.ui.year.html(this.collection.date.getFullYear());
     },
 

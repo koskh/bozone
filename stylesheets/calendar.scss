@@ -18,11 +18,16 @@
    &__day {
        float: left;
        width: 13.5%;
+       margin: 1px;
        text-align: center;
        line-height: 2em;
-       background: gray;
-       margin: 1px;
+       background: lightgray;
        cursor: pointer;
+
+       &--weekdays {
+           background: lightpink;
+           cursor: none;
+       }
 
        &.is-active {
            background: lightsteelblue;

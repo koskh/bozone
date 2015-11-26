@@ -20,11 +20,14 @@ a {
   .calendar__day {
     float: left;
     width: 13.5%;
+    margin: 1px;
     text-align: center;
     line-height: 2em;
-    background: gray;
-    margin: 1px;
+    background: lightgray;
     cursor: pointer; }
+    .calendar__day--weekdays {
+      background: lightpink;
+      cursor: none; }
     .calendar__day.is-active {
       background: lightsteelblue; }
   .calendar__day:nth-child(7n) {

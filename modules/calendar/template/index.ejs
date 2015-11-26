@@ -4,6 +4,13 @@
         <span class="js-prev-month">&laquo;</span>
         <span class="js-header-month"></span> <span class="js-header-year"></span>
         <span class="js-next-month">&raquo;</span>
+
+        <div>
+            <% weekDays.forEach(function(day) { %>
+            <span class="calendar__day calendar__day--weekdays"><%= day %></span>
+            <% }) %>
+        </div>
+
     </div>
 
     <div class="calendar__body"></div>
