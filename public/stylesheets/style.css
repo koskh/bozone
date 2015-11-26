@@ -25,7 +25,7 @@ a {
     line-height: 2em;
     background: lightgray;
     cursor: pointer; }
-    .calendar__day--weekdays {
+    .calendar__day--weekday {
       background: lightpink;
       cursor: auto; }
     .calendar__day.is-active {
