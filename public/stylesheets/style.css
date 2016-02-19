@@ -33,4 +33,7 @@ a {
   .calendar__day:nth-child(7n) {
     color: yellow; }
 
+.form-group {
+  margin-bottom: 15px; }
+
 /*# sourceMappingURL=style.css.map */
