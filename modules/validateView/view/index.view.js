@@ -73,8 +73,8 @@ module.exports = Marionette.ItemView.extend({
         validateAnswer.isValid ? this.model.set(name, value) : this.showErrorHelper(name, validateAnswer.message);
     },
 
-    showErrorHelper(field, msg) {
-        debugger;
+    showErrorHelper(field, message) {
+        this.ui[field].after(`<span class ="form-error-helper">${message}</span></span>`);
     }
 
 });
