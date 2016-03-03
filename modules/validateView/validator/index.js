@@ -1,7 +1,5 @@
 'use strict';
 
-const _ = require('underscore');
-
 module.exports = Validator;
 
 function Validator() {
@@ -10,56 +8,26 @@ function Validator() {
 
 const _p = Validator.prototype;
 
-//_p.validate = function(){
-//    console.log('exec Validator.validate()');
-//};
+_p.validate = function(value, field, schema, options) {
+    const answer = [];
 
-/**
- * Ответ валидатора
- * @type {{isValid: boolean, msg: string}}
- */
-_p._answerObjectTemplate = {
-    isValid: false,
-    message: ''
-};
+    if (field && schema[field]) {
+        const rules = schema[field].rules; // массив-список правил валидации
 
-_p._getAnswerObject = function(){
-    return _.extend({}, this._answerObjectTemplate);
-};
-
-/**
- * Создает объект валидного объекта
- */
-_p.getValidAnswer = function() {
-    const answer = this._getAnswerObject();
-    return (answer.isValid = true, answer.message = '', answer);
-};
-
-/**
- * СОздает объект невалидного объекта
- * @param msg: string
- */
-_p.getInvalidAnswer = function(message) {
-    const answer = this._getAnswerObject();
-    return (answer.isValid = false, answer.message = message, answer);
-};
-
-
-//_p.setAnswerObject = function(answerObject){
-//    this.answerObject = answerObject;
-//};
-
-
-
-_p.validate = function(value, schema) {
-    for (let i = 0; i <= schema.length; i++) {
-        let rule = schema[i];
-        if (!rule.validate(value)) {
-            return this.getInvalidAnswer(rule.message);
+        for (let i = 0; i < rules.length; i++) {
+            let rule = rules[i];
+            if (!rule.validate(value)) {
+                if (options && options.forceAllRules) {
+                    answer.push(rule.message); // прогон по всем правилам
+                } else {
+                    answer.push(rule.message); // до первой ошибки
+                    break;
+                }
+            }
         }
     }
 
-    return this.getValidAnswer();
+    return answer.length ? answer : undefined;
 };
 
 // Helpers
