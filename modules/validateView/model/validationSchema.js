@@ -21,12 +21,12 @@ module.exports = {
                 },
                 message: 'Число должно находиться в интервале 0-100'
             },
-            {
-                validate: function (value) {
-                    //return validator.isLength(value, 1, 9);
-                },
-                message: 'Число должно быть от 1 до 9 символов'
-            }
+            //{
+            //    validate: function (value) {
+            //        //return validator.isLength(value, 1, 9);
+            //    },
+            //    message: 'Число должно быть от 1 до 9 символов'
+            //}
         ]
     },
     'surname': {

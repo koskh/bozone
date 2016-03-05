@@ -29,5 +29,6 @@ module.exports = Marionette.ItemView.extend({
 
         //валидируем только одно поле и решаем, устанавливать в модель или нет.
         this.model.set(name, value, {validate: true, checkOnly:[name], setOnError: true, forceAllRules: true});
+
     }
 });

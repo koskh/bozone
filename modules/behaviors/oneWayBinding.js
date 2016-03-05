@@ -5,7 +5,10 @@ module.exports = Marionette.Behavior.extend({
         'change': '_reRender'
     },
 
-    _reRender() {
-        this.view.render();
+    _reRender(model, options) {
+        //this.view.render();
+        _.each(model.changed, (value, key) =>{
+            this.view.ui[key].val(value);
+        });
     }
 });
