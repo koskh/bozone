@@ -6,7 +6,7 @@ module.exports = Marionette.Behavior.extend({
     },
 
     initialize() {
-        console.log('Behaver initialize.' + this.options.message);
+        //console.log('Behaver initialize.' + this.options.message);
     },
 
     _modelInvalidHandler(model, validationError) {

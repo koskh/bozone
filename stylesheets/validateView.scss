@@ -1,6 +1,8 @@
+// компонент ввода с валидационным сообщением.
 .form-group {
   margin-bottom: 15px;
 
+  //Валидационное сообщение
   & .form-error-helper {
     color: red;
     font-size: 80%;
