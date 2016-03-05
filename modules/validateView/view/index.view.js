@@ -7,9 +7,7 @@ module.exports = Marionette.ItemView.extend({
 
     behaviors: {
         oneWayBinding: {},
-        invalidValidate: {
-            //message: 'options for invalidValidate here'
-        }
+        invalidValidate: {}
     },
 
     ui: {
