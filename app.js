@@ -32,7 +32,7 @@ app.use(sass({
   //debug: true
 }));
 
-app.use('/js/bundle.js', browserify(['underscore', 'jquery', 'backbone', 'backbone.marionette', {'./modules/localization/index.js': {expose: 'localize'}}]));
+app.use('/js/bundle.js', browserify(['underscore', 'underscore.string', 'jquery', 'backbone', 'backbone.marionette', {'./modules/localization/index.js': {expose: 'localize'}}]));
 //app.use('/js/localization.js', browserify( [{'./modules/localization/index.js': {expose: 'localize'}}]));
 app.use('/js/modules/', browserify( __dirname + '/modules/', {external: ['underscore'],  transform: ['jstify', 'babelify']}));
 

@@ -1,7 +1,5 @@
 'use strict';
 
-const _ = require('underscore');
-
 const Validator = require('../validator/index');
 const validator = new Validator();
 
@@ -38,39 +36,53 @@ module.exports = Backbone.Model.extend({
 
         if (options.checkOnly.length > 0) {
             // валидация только переданных полей
-            _.each(options.checkOnly, (fieldName) => {  //TODO: рефакторинг нид
-                let errors = this._validateValue(attrs[fieldName], fieldName, options);
-                errors && (validationErrors[fieldName] = errors) || this.trigger('valid:field', fieldName);
-                if (options.setOnError) {
-                    this.set(fieldName, attrs[fieldName]);
-                }
+            _.each(options.checkOnly, (fieldName) => {
+                this._processField(attrs[fieldName], fieldName, options, validationErrors);
             });
         } else {
             // валидация всех полей
             _.each(attrs, (value, fieldName) => {
-                let errors = this._validateValue(value, fieldName, options);
-                errors && (validationErrors[fieldName] = errors) || this.trigger('valid:field', fieldName);
-                if (options.setOnError) {
-                    this.set(fieldName, attrs[fieldName]);
-                }
+                this._processField(attrs[fieldName], fieldName, options, validationErrors);
             });
         }
 
         // по спекам, возращаемое значение будет доступне в model.validateErrors
         return _.keys(validationErrors).length > 0 ? validationErrors : undefined;
-
     },
 
-    _validateValue(value, key, options) {
+    /**
+     * Обработка поля. Валидируем, триггерим и сетим, если требуется.
+     * @param value
+     * @param fieldName
+     * @param options
+     * @param validationErrors
+     * @private
+     */
+    _processField(value, fieldName, options, validationErrors) {
+        let errors = this.validateValue(value, fieldName, options);
+        errors && (validationErrors[fieldName] = errors) || this.trigger('valid:field', fieldName);
+        if (options.setOnError) {
+            this.set(fieldName, value);
+        }
+    },
+
+    /**
+     * Валидация значения в поле модели.
+     * @param value
+     * @param fieldName
+     * @param options
+     * @returns {*[]}
+     */
+    validateValue(value, fieldName, options) {
         // Конвертация в требуемый тип. Конвертор берется из схемы валидации
-        value = schema[key] && schema[key].toType ? schema[key].toType.convert(value) : value;
+        value = schema[fieldName] && schema[fieldName].toType ? schema[fieldName].toType.convert(value) : value;
 
         if (_.isNaN(value)) {
             /* Не смогли сконвертировать в треуемый тип.*/
-            return [schema[key].toType.message]; // в массиве, для соблюбдения спецификац
+            return [schema[fieldName].toType.message]; // в массиве, для соблюбдения спецификац
         } else {
             /* Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации*/
-            let answer = validator.validate(value, key, schema, {forceAllRules: options.forceAllRules});
+            let answer = validator.validate(value, fieldName, schema, {forceAllRules: options.forceAllRules});
             if (answer) {
                 return answer;
             }
