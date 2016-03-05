@@ -20,10 +20,6 @@ module.exports = Marionette.ItemView.extend({
         'change @ui.name,@ui.surname,@ui.email': '_inputFormHandler'
     },
 
-    //modelEvents: {
-    //    'change': 'render'
-    //},
-
     _inputFormHandler(e) {
         const name = e.currentTarget.name;
         const value = e.currentTarget.value;
