@@ -1,3 +1,8 @@
 .form-group {
   margin-bottom: 15px;
+
+  & .form-error-helper {
+    color: red;
+    font-size: 80%;
+  }
 }

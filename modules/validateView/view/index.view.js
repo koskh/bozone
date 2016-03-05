@@ -5,6 +5,13 @@ var template = require('../template/index.ejs');
 module.exports = Marionette.ItemView.extend({
     template: template,
 
+    behaviors: {
+        oneWayBinding: {},
+        invalidValidate: {
+            //message: 'options for invalidValidate here'
+        }
+    },
+
     ui: {
         'name': '[name="name"]',
         'surname': '[name="surname"]',
@@ -15,10 +22,9 @@ module.exports = Marionette.ItemView.extend({
         'change @ui.name,@ui.surname,@ui.email': '_inputFormHandler'
     },
 
-    modelEvents: {
-        'change': 'render',
-        'invalid': '_modelInvalidHandler'
-    },
+    //modelEvents: {
+    //    'change': 'render'
+    //},
 
     _inputFormHandler(e) {
         const name = e.currentTarget.name;
@@ -29,17 +35,5 @@ module.exports = Marionette.ItemView.extend({
 
         //валидируем только одно поле и решаем, устанавливать в модель или нет.
         this.model.set(name, value, {validate: true, checkOnly:[name], setOnError: true, forceAllRules: true});
-
-    },
-
-    _modelInvalidHandler(model, validationError) {
-        _.each(validationError, (messages, field) => {
-            this.showErrorHelper( field, messages.toString()); // TODO: вменяемая строка ошибки
-        });
-    },
-
-    showErrorHelper(field, message) {
-        this.ui[field].after(`<span class ="form-error-helper">${message}</span></span>`); //TODO: Вменяемый тултип об ошибке.
     }
-
 });

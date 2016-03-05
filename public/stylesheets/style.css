@@ -35,5 +35,8 @@ a {
 
 .form-group {
   margin-bottom: 15px; }
+  .form-group .form-error-helper {
+    color: red;
+    font-size: 80%; }
 
 /*# sourceMappingURL=style.css.map */
