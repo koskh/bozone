@@ -28,14 +28,6 @@ module.exports = Marionette.Behavior.extend({
         });
     },
 
-    //_modelValidHandler(model, validationError) {
-    //    debugger;
-    //    _.each(validationError, (messages, field) => {
-    //        this.ui[field].next().remove();
-    //        //this.showErrorHelper( field, messages.toString()); // TODO: вменяемая строка ошибки
-    //    });
-    //},
-
     showErrorHelper(field, message) {
         //TODO: Вменяемый тултип об ошибке.
         this.ui[field].next().remove();
