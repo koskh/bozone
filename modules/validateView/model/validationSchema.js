@@ -6,6 +6,8 @@
  * - как валидировать это значение
  */
 
+const extractFloat = require('../../utilities/number/extract');
+
 module.exports = {
     'name': {
         required: {
@@ -17,7 +19,7 @@ module.exports = {
 
         type: {
             convert: function (value) {
-                return parseFloat(value);
+                return extractFloat(value);
             },
             message: 'Неверный формат данных. Разрешено только число.'
         },
@@ -37,7 +39,7 @@ module.exports = {
 
         type: {
             convert: function (value) {
-                return parseFloat(value);
+                return extractFloat(value);
             },
             message: 'Неверный формат данных. Разрешено только число.'
         },

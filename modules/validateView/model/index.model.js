@@ -77,23 +77,5 @@ module.exports = Backbone.Model.extend({
     validateValue(value, fieldName, schema, options) {
         let answer = validator.validateInputValue(value, fieldName, schema, options);
         return answer;
-
-        //if (validator.checkRequired(value, fieldName, schema, options)) {
-        //
-        //}
-        //
-        //// Конвертация в требуемый тип. Конвертор берется из схемы валидации
-        //value = schema[fieldName] && schema[fieldName].toType ? schema[fieldName].toType.convert(value) : value;
-        //
-        //if (_.isNaN(value)) {
-        //    /* Не смогли сконвертировать в требуемый тип.*/
-        //    return [schema[fieldName].toType.message]; // в массиве, для соблюбдения спецификац
-        //} else {
-        //    /* Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации*/
-        //    let answer = validator.validate(value, fieldName, schema, {forceAllRules: options.forceAllRules});
-        //    if (answer) {
-        //        return answer;
-        //    }
-        //}
     }
 });

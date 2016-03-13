@@ -2,12 +2,11 @@
 
 const regex = /^[+-]?\d+([.,]\d+)?$/;
 
-
-export default function (value) {
+module.exports = function (value) {
     value = value.trim(); // IE9+ only
 
     if (value.length === 0) {
-        return null;
+        return NaN;
     }
 
     if (!regex.test(value)) {
