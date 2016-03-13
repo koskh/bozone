@@ -9,7 +9,7 @@
 module.exports = {
     'name': {
         required: {
-            validate: function(value) {
+            isEmpty: function(value) {
                 return value.trim().length > 0;
             },
             message: 'не может быть пустым'
@@ -28,17 +28,12 @@ module.exports = {
                 },
                 message: 'Число должно находиться в интервале 0-100'
             }
-            //{
-            //    validate: function (value) {
-            //        //return validator.isLength(value, 1, 9);
-            //    },
-            //    message: 'Число должно быть от 1 до 9 символов'
-            //}
         ]
     },
     'surname': {
+        required: {
 
-        required: null,
+        },
 
         toType: {
             convert: function (value) {

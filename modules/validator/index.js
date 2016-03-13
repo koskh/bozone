@@ -1,5 +1,7 @@
 'use strict';
 
+const helpers = require('./helpers');
+
 module.exports = Validator;
 
 function Validator() {
@@ -31,36 +33,51 @@ _p.validate = function (value, field, schema, options) {
 };
 
 _p.checkRequired = function (value, field, schema, options) {
-    const answer = [];
-
-    if (field && schema[field] && schema[field].required) {
-        const required = schema[field].required;
-        if (!required.validate(value)) {
-            answer.push(required.message);
-        }
+    if (!(field && schema[field] && schema[field].required)) {
+        throw new Error('Validator.checkRequired() need field and schema and required field');
     }
 
-    return answer.length ? answer : undefined;
+    const isEmpty = schema[field].required.isEmpty || helpers.isEmptyString;
+    const msg = schema[field].required.message || helpers.getMessage('emptyNotAllowed');
+
+    return isEmpty(value) ? [msg] : undefined;
 };
 
 _p.validateValue = function (value, field, schema, options) {
-    // поле должно быть заполненно?
-    const requiredErrors = this.checkRequired(value, field, schema, options);
-    if (requiredErrors) {
-        return requiredErrors;
+    if (!(field && schema[field])) {
+        throw new Error('Validator.ValidateValue() need field and schema');
     }
 
-    // конвертация в требуемый тип. Конвертор берется из схемы валидации
-    value = schema[fieldName] && schema[fieldName].toType ? schema[fieldName].toType.convert(value) : value;
+    //ситуация с пустым значением, если разрешено пустое значение. не валидируем
+    const isEmpty = schema[field].required && schema[field].required.isEmpty || helpers.isEmptyString;
+    if (isEmpty(value) && !this._isRequired(value, field, schema)) {
+        return;
+    }
+
+    // ситуация с требованием заполненности.
+    const requireErrors = this.checkRequired(value, field, schema, options);
+    if (requireErrors) {
+        return requireErrors;
+    }
+
+    // конвертация в требуемый тип
+    const convert = schema[field].toType.convert || helpers.defaultConvert;
+    const msg = schema[field].toType.message  || helpers.getMessage('dataTypeError');
+
+    value = convert(value);
 
     if (_.isNaN(value)) {
-        /* Не смогли сконвертировать в требуемый тип.*/
-        return [schema[fieldName].toType.message]; // в массиве, для соблюбдения спецификац
-    } else {
-        /* Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации*/
-        let answer = validator.validate(value, fieldName, schema, {forceAllRules: options.forceAllRules});
-        if (answer) {
-            return answer;
-        }
+        return [msg]; // в массиве, для соблюбдения спецификац
     }
+
+    /* Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации*/
+    let answer = validator.validate(value, fieldName, schema, {forceAllRules: options.forceAllRules});
+    if (answer) {
+        return answer;
+    }
+
 };
+
+_p._isRequired = function (value, field, schema) {
+    return Boolean(schema[field].required);
+}
