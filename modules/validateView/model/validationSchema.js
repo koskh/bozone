@@ -10,12 +10,12 @@ module.exports = {
     'name': {
         required: {
             isEmpty: function(value) {
-                return value.trim().length > 0;
+                return !value.trim().length;
             },
             message: 'не может быть пустым'
         },
 
-        toType: {
+        type: {
             convert: function (value) {
                 return parseFloat(value);
             },
@@ -31,11 +31,11 @@ module.exports = {
         ]
     },
     'surname': {
-        required: {
+        //required: {
+        //
+        //},
 
-        },
-
-        toType: {
+        type: {
             convert: function (value) {
                 return parseFloat(value);
             },
@@ -50,6 +50,7 @@ module.exports = {
             },
             {
                 validate: function (value) {
+                    return false;
                     //return validator.isLength(value, 1, 9);
                 },
                 message: 'Число должно быть от 1 до 9 символов'

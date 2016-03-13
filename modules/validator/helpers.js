@@ -1,13 +1,15 @@
 'use strict';
-
+const _ = require ('underscore');
 const errorMessages = require ('./messages');
 
 module.exports = {
-    isEmptyString: function(value) {
-        return value.trim().length > 0;
+    isEmptyValue: function(value) { //TODO: вменяемую стратегию проверки "пустого" значения?
+        if (_.isString(value)) {
+            return !Boolean(value.trim().length > 0);
+        }
     },
-    defaultConvert: function(value) {
-        return value.trim();
+    noConvert: function(value) {
+        return value;
     },
 
     getMessage: function(key) {

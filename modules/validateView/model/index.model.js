@@ -75,7 +75,7 @@ module.exports = Backbone.Model.extend({
      * @returns {*[]} массив сообщений об ошибках
      */
     validateValue(value, fieldName, schema, options) {
-        let answer = validator.validateValue();
+        let answer = validator.validateInputValue(value, fieldName, schema, options);
         return answer;
 
         //if (validator.checkRequired(value, fieldName, schema, options)) {
