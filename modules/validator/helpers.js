@@ -4,9 +4,7 @@ const errorMessages = require ('./messages');
 
 module.exports = {
     isEmptyValue: function(value) { //TODO: вменяемую стратегию проверки "пустого" значения?
-        if (_.isString(value)) {
-            return !Boolean(value.trim().length > 0);
-        }
+        return !Boolean(value.length > 0);
     },
     noConvert: function(value) {
         return value;
