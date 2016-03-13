@@ -1,6 +1,6 @@
 'use strict';
 
-const Validator = require('../validator/index');
+const Validator = require('../../validator/index');
 const validator = new Validator();
 
 /**
@@ -52,15 +52,15 @@ module.exports = Backbone.Model.extend({
 
     /**
      * Обработка поля. Валидируем, триггерим и сетим, если требуется.
-     * @param value
-     * @param fieldName
-     * @param options
-     * @param validationErrors
+     * @param value значение
+     * @param fieldName имя проверяемого поля
+     * @param options опции валидации
+     * @param validationErrors куда записываем ошибки валидации
      * @private
      */
     _processField(value, fieldName, options, validationErrors) {
-        let errors = this.validateValue(value, fieldName, options);
-        errors && (validationErrors[fieldName] = errors) || this.trigger('valid:field', fieldName);
+        let errors = this.validateValue(value, fieldName, schema, options);
+        errors ? validationErrors[fieldName] = errors : this.trigger('valid:field', fieldName);
         if (options.setOnError) {
             this.set(fieldName, value);
         }
@@ -70,22 +70,30 @@ module.exports = Backbone.Model.extend({
      * Валидация значения в поле модели.
      * @param value
      * @param fieldName
+     * @param schema
      * @param options
-     * @returns {*[]}
+     * @returns {*[]} массив сообщений об ошибках
      */
-    validateValue(value, fieldName, options) {
-        // Конвертация в требуемый тип. Конвертор берется из схемы валидации
-        value = schema[fieldName] && schema[fieldName].toType ? schema[fieldName].toType.convert(value) : value;
+    validateValue(value, fieldName, schema, options) {
+        let answer = validator.validateValue();
+        return answer;
 
-        if (_.isNaN(value)) {
-            /* Не смогли сконвертировать в треуемый тип.*/
-            return [schema[fieldName].toType.message]; // в массиве, для соблюбдения спецификац
-        } else {
-            /* Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации*/
-            let answer = validator.validate(value, fieldName, schema, {forceAllRules: options.forceAllRules});
-            if (answer) {
-                return answer;
-            }
-        }
+        //if (validator.checkRequired(value, fieldName, schema, options)) {
+        //
+        //}
+        //
+        //// Конвертация в требуемый тип. Конвертор берется из схемы валидации
+        //value = schema[fieldName] && schema[fieldName].toType ? schema[fieldName].toType.convert(value) : value;
+        //
+        //if (_.isNaN(value)) {
+        //    /* Не смогли сконвертировать в требуемый тип.*/
+        //    return [schema[fieldName].toType.message]; // в массиве, для соблюбдения спецификац
+        //} else {
+        //    /* Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации*/
+        //    let answer = validator.validate(value, fieldName, schema, {forceAllRules: options.forceAllRules});
+        //    if (answer) {
+        //        return answer;
+        //    }
+        //}
     }
 });

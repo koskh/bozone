@@ -8,6 +8,13 @@
 
 module.exports = {
     'name': {
+        required: {
+            validate: function(value) {
+                return value.trim().length > 0;
+            },
+            message: 'не может быть пустым'
+        },
+
         toType: {
             convert: function (value) {
                 return parseFloat(value);
@@ -30,6 +37,9 @@ module.exports = {
         ]
     },
     'surname': {
+
+        required: null,
+
         toType: {
             convert: function (value) {
                 return parseFloat(value);
