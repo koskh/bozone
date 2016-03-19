@@ -6,15 +6,15 @@ const helpers = require('./helpers');
 module.exports = Validator;
 
 function Validator() {
-    //this.answerObject = this.getAnswerObject();
+
 }
 
 const _p = Validator.prototype;
 
-_p.validateInputRule = function (value, field, schema, options) {
-
+_p.validateInput = function (value, field, schema, options) {
+    // без имени поля и схемы его валидации не позволяем вызывать валадаторы
     if (!(field && schema[field])) {
-        throw new Error('Validator.validateInputRule() need field and schema');
+        throw new Error('Validator.validateInput() need field and schema');
     }
 
     //ситуация с пустым значением, если разрешено пустое значение. не валидируем
@@ -43,7 +43,6 @@ _p.validateInputRule = function (value, field, schema, options) {
 };
 
 _p._checkRequired = function (value, field, schema, options) {
-
     if (!(field && schema[field]) && schema[field].required) {
         throw new Error('Validator.checkRequired() need field, schema and required field');
     }
@@ -55,8 +54,6 @@ _p._checkRequired = function (value, field, schema, options) {
 };
 
 _p._checkDataType = function (value, field, schema, options) {
-
-    // возможна конвертация в требуемый тип ?
     if (!(field && schema[field] && schema[field].type)) {
         throw new Error('Validator.checkDataType() need field, schema and type field');
     }
@@ -67,7 +64,6 @@ _p._checkDataType = function (value, field, schema, options) {
 };
 
 _p._checkInputRules = function (value, field, schema, options) {
-
     if (!(field && schema[field] && schema[field].inputRules)) {
         throw new Error('Validator.checkDataType() need field, schema and  inputRules field');
     }
@@ -102,10 +98,9 @@ _p._checkInputRules = function (value, field, schema, options) {
  * @param options
  * @returns {*}
  */
-_p.validateLogicRule = function (attrs, field,  schema, options) { // schema для  упрощенного расширения логик-валидации
-
+_p.validateLogic = function (attrs, field, schema, options) { // schema для  упрощенного расширения логик-валидации
     if (!(field && schema[field])) {
-        throw new Error('Validator.validateLogicRule() need field, schema and logicRules field');
+        throw new Error('Validator.validateLogic() need field, schema and logicRules field');
     }
 
     /* Прогоняем по правилам логик- валидации*/
@@ -114,7 +109,7 @@ _p.validateLogicRule = function (attrs, field,  schema, options) { // schema д�
 };
 
 _p._checkLogicRules = function(attrs, field, schema) {
-
+    //
     const answer = [];
     const logicRules = schema[field].logicRules; // массив-список правил валидации
 

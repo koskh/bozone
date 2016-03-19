@@ -5,12 +5,9 @@ const _ = require('underscore');
 const Validator = require('../../validator/index');
 const validator = new Validator();
 
-/**
- * Схема валидации:
- * - во что конвертировать значения
- * - как валидировать
- */
-const schema = require('./validationSchema');
+
+const schema = require('./validationSchema'); // Схема валидации
+let validationErrorsObj = {};  // объект ошибок, {field:[errorMsg, errorMsg, ...], ...}
 
 module.exports = Backbone.Model.extend({
     defaults: {
@@ -33,27 +30,24 @@ module.exports = Backbone.Model.extend({
      * @returns {*}
      */
     validate: function (attrs, options) {
-
         // TODO: использовать es6 options= {}; babel не хочет дефолтные значений функции прописывать.
         options = _.extend({checkOnly: [], setOnError: false, forceAllRules: false, validateLogicRules: true}, options);
-
-        const validationErrorsObj = {}; // объект ошибок, {field:[errorMsg, errorMsg, ...], ...}
+        //
+        validationErrorsObj = {}; // объект ошибок, {field:[errorMsg, errorMsg, ...], ...}
 
         if (options.checkOnly.length > 0) {
-
             // валидация только переданных полей
             _.each(options.checkOnly, (fieldName) => {
-                this._processField(attrs[fieldName], fieldName, options, validationErrorsObj);
+                this._validateInput(attrs[fieldName], fieldName, options);
             });
         } else {
-
             // валидация всех полей
             _.each(attrs, (value, fieldName) => {
-                this._processField(attrs[fieldName], fieldName, options, validationErrorsObj);
+                this._validateInput(attrs[fieldName], fieldName, options);
             });
             //валидация бизнесс логкики
-            if ( !_.keys(validationErrorsObj).length && options.validateLogicRules) {
-                this._validateLogicErrors(attrs, schema, options, validationErrorsObj);
+            if (!_.keys(validationErrorsObj).length && options.validateLogicRules) {
+                this._validateLogic(attrs, options);
             }
         }
 
@@ -66,28 +60,25 @@ module.exports = Backbone.Model.extend({
      * @param value значение
      * @param fieldName имя проверяемого поля
      * @param options опции валидации
-     * @param validationErrorsObj куда записываем ошибки валидации
      * @private
      */
-    _processField(value, fieldName, options, validationErrorsObj) {
-
-        let errors = schema[fieldName] ? validator.validateInputRule(value, fieldName, schema, options) : undefined;
+    _validateInput(value, fieldName, options) {
+        let errors = schema[fieldName] ? validator.validateInput(value, fieldName, schema, options) : undefined;
         errors ? validationErrorsObj[fieldName] = errors : this.trigger('valid:field', fieldName);
         if (options.setOnError) {
             this.set(fieldName, value);
         }
     },
-
-    //_validateInputError(value, fieldName, schema, options) {
-    //    let answer = validator.validateInputRule(value, fieldName, schema, options);
-    //    return answer;
-    //},
-
-    _validateLogicErrors(attrs, schema, options, validationErrorsObj) {
-
+    /**
+     * Валидация логики. Происходит после полной проверки ввода
+     * @param attrs Объект полей:значений аттрибутов модели
+     * @param options
+     * @private
+     */
+    _validateLogic(attrs, options) {
         _.each(attrs, (value, fieldName) => {
-            let errors = schema[fieldName] ? validator.validateLogicRule(attrs, fieldName,  schema, options) : undefined;
-            errors ? validationErrorsObj[fieldName] = errors :  this.trigger('valid:field', fieldName);
+            let errors = schema[fieldName] ? validator.validateLogic(attrs, fieldName, schema, options) : undefined;
+            errors ? validationErrorsObj[fieldName] = errors : this.trigger('valid:field', fieldName);
         });
     }
 });
