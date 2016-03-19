@@ -33,6 +33,7 @@ module.exports = Backbone.Model.extend({
      * @returns {*}
      */
     validate: function (attrs, options) {
+
         // TODO: использовать es6 options= {}; babel не хочет дефолтные значений функции прописывать.
         options = _.extend({checkOnly: [], setOnError: false, forceAllRules: false, validateLogicRules: true}, options);
 
@@ -69,6 +70,7 @@ module.exports = Backbone.Model.extend({
      * @private
      */
     _processField(value, fieldName, options, validationErrorsObj) {
+
         let errors = schema[fieldName] ? validator.validateInputRule(value, fieldName, schema, options) : undefined;
         errors ? validationErrorsObj[fieldName] = errors : this.trigger('valid:field', fieldName);
         if (options.setOnError) {
@@ -82,6 +84,7 @@ module.exports = Backbone.Model.extend({
     //},
 
     _validateLogicErrors(attrs, schema, options, validationErrorsObj) {
+
         _.each(attrs, (value, fieldName) => {
             let errors = schema[fieldName] ? validator.validateLogicRule(attrs, fieldName,  schema, options) : undefined;
             errors ? validationErrorsObj[fieldName] = errors :  this.trigger('valid:field', fieldName);

@@ -12,6 +12,7 @@ function Validator() {
 const _p = Validator.prototype;
 
 _p.validateInputRule = function (value, field, schema, options) {
+
     if (!(field && schema[field])) {
         throw new Error('Validator.validateInputRule() need field and schema');
     }
@@ -42,6 +43,7 @@ _p.validateInputRule = function (value, field, schema, options) {
 };
 
 _p._checkRequired = function (value, field, schema, options) {
+
     if (!(field && schema[field]) && schema[field].required) {
         throw new Error('Validator.checkRequired() need field, schema and required field');
     }
@@ -53,6 +55,7 @@ _p._checkRequired = function (value, field, schema, options) {
 };
 
 _p._checkDataType = function (value, field, schema, options) {
+
     // возможна конвертация в требуемый тип ?
     if (!(field && schema[field] && schema[field].type)) {
         throw new Error('Validator.checkDataType() need field, schema and type field');
@@ -64,6 +67,7 @@ _p._checkDataType = function (value, field, schema, options) {
 };
 
 _p._checkInputRules = function (value, field, schema, options) {
+
     if (!(field && schema[field] && schema[field].inputRules)) {
         throw new Error('Validator.checkDataType() need field, schema and  inputRules field');
     }
@@ -90,7 +94,16 @@ _p._checkInputRules = function (value, field, schema, options) {
     return answer.length ? answer : undefined;
 };
 
-_p.validateLogicRule = function (attrs, field,  schema, options) {
+/**
+ * Валидация логики
+ * @param attrs Объект аттрибутов модели
+ * @param field Имя поля текущей проверки
+ * @param schema  Схема с правилами валидации
+ * @param options
+ * @returns {*}
+ */
+_p.validateLogicRule = function (attrs, field,  schema, options) { // schema для  упрощенного расширения логик-валидации
+
     if (!(field && schema[field])) {
         throw new Error('Validator.validateLogicRule() need field, schema and logicRules field');
     }
