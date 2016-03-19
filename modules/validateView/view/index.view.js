@@ -21,7 +21,7 @@ module.exports = Marionette.ItemView.extend({
     },
 
     _inputFormHandler(e) {
-
+        //
         const name = e.currentTarget.name;
         const value = e.currentTarget.value;
 
