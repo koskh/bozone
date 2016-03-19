@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('underscore');
+
 module.exports = Marionette.Behavior.extend({
     modelEvents: {
         'change': '_reRender'

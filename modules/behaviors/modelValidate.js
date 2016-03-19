@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('underscore');
+
 module.exports = Marionette.Behavior.extend({
     modelEvents: {
         'invalid': '_modelInvalidHandler',
@@ -24,13 +26,15 @@ module.exports = Marionette.Behavior.extend({
     _modelInvalidHandler(model, validationError) {
         //debugger;
         _.each(validationError, (messages, field) => {
-            this.showErrorHelper( field, messages.toString()); // TODO: вменяемая строка ошибки
+            //this.showErrorHelper( field, messages.toString()); // TODO: вменяемая строка ошибки
+            this.ui[field].next().remove();
+            this.ui[field].after(`<span class ="form-error-helper">${messages.toString()}</span></span>`);
         });
     },
 
-    showErrorHelper(field, message) {
-        //TODO: Вменяемый тултип об ошибке.
-        this.ui[field].next().remove();
-        this.ui[field].after(`<span class ="form-error-helper">${message}</span></span>`);
-    }
+    //showErrorHelper(field, message) {
+    //    //TODO: Вменяемый тултип об ошибке.
+    //    this.ui[field].next().remove();
+    //    this.ui[field].after(`<span class ="form-error-helper">${message}</span></span>`);
+    //}
 });

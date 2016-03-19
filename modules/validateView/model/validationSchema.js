@@ -23,12 +23,21 @@ module.exports = {
             },
             message: 'Неверный формат данных. Разрешено только число.'
         },
-        rules: [
+        inputRules: [
             {
                 validate: function (value) {
                     return value >= 0 && value <= 100;
                 },
                 message: 'Число должно находиться в интервале 0-100'
+            }
+        ],
+
+        logicRules: [
+            {
+                validate: function (attrs) {
+                    return attrs.name >= attrs.surname;
+                },
+                message: 'Знечение поля NAME должно быть меньше или равно значению поля SURNAME'
             }
         ]
     },
@@ -43,20 +52,20 @@ module.exports = {
             },
             message: 'Неверный формат данных. Разрешено только число.'
         },
-        rules: [
+        inputRules: [
             {
                 validate: function (value) {
                     return value >= 0 && value <= 100;
                 },
                 message: 'Число должно находиться в интервале 0-100'
             },
-            {
-                validate: function (value) {
-                    return false;
-                    //return validator.isLength(value, 1, 9);
-                },
-                message: 'Число должно быть от 1 до 9 символов'
-            }
+        //    {
+        //        validate: function (value) {
+        //            return false;
+        //            //return validator.isLength(value, 1, 9);
+        //        },
+        //        message: 'Число должно быть от 1 до 9 символов'
+        //    }
         ]
     }
 }

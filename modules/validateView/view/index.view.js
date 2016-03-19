@@ -7,7 +7,7 @@ module.exports = Marionette.ItemView.extend({
 
     behaviors: {
         oneWayBinding: {},
-        invalidValidate: {}
+        modelValidate: {}
     },
 
     ui: {
@@ -25,9 +25,9 @@ module.exports = Marionette.ItemView.extend({
         const value = e.currentTarget.value;
 
         // устанавливаем значения в модель, проверяя сразу все поля
-        //this.model.set(name, value, {validate: true, checkAllAttributes: true, setOnError: true, forceAllRules: true});
+        this.model.set(name, value, {validate: true, setOnError: true});
 
         //валидируем только одно поле и решаем, устанавливать в модель или нет.
-        this.model.set(name, value, {validate: true, checkOnly:[name], setOnError: true, forceAllRules: true});
+        //this.model.set(name, value, {validate: true, checkOnly:[name], setOnError: true, forceAllRules: true});
     }
 });
