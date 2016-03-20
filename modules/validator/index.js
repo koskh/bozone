@@ -12,7 +12,7 @@ module.exports = Validator;
 
 function Validator(schema){
     if (!schema) {
-        throw new Error('Validator need schema')
+        throw new Error('Validator need schema');
     }
 
     this.schema = schema;
@@ -28,13 +28,13 @@ const _p = Validator.prototype;
  * @returns {*}
  */
 _p.validateInput = function (value, field, options) {
-    // без имени поля и схемы его валидации не позволяем вызывать валадаторы
-    if (!(field && this.schema[field])) {
-        throw new Error('Validator.validateInput() need field and schema');
+    //
+    // ситуация отсутсвия правил валидации для этого поля
+    if (!this.schema[field]) {
+        return undefined;
     }
 
     //ситуация с пустым значением, если разрешено пустое значение. не валидируем
-    //const isEmpty = schema[field].required && schema[field].required.isEmpty || helpers.isEmptyString;
     if (helpers.isEmptyValue(value) && !this.schema[field].required) {
         return;
     }
@@ -103,9 +103,11 @@ _p._checkInputRules = function (value, field, options) {
  * @param options
  * @returns {*}
  */
-_p.validateLogic = function (attrs, field, options) { // schema для  упрощенного расширения логик-валидации
-    if (!(field && this.schema[field])) {
-        throw new Error('Validator.validateLogic() need field, schema and logicRules field');
+_p.validateLogic = function (attrs, field, options) {
+    //
+    // ситуация отсутсвия правил логик валидации для этого поля
+    if (!this.schema[field]) {
+        return undefined;
     }
 
     /* Прогоняем по правилам логик- валидации*/
@@ -127,4 +129,4 @@ _p._checkLogicRules = function(attrs, field) {
     }
 
     return answer.length ? answer : undefined;
-}
+};

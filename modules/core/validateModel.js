@@ -2,13 +2,12 @@
 
 const _ = require('underscore');
 
-let validationErrorsObj = {};  // объект ошибок, {field:[errorMsg, errorMsg, ...], ...}
+let validationErrorsObj = {};  // static singleton для сбора ошибок, {field:[errorMsg, errorMsg, ...], ...}
 
 module.exports = Backbone.Model.extend({
     /**
-     * Стратегии проверки
+     * Стратегия валидации
      */
-    schema: undefined, // schema abstract interface
     validator: undefined, //validator's abstract interface
 
     /**
@@ -28,12 +27,12 @@ module.exports = Backbone.Model.extend({
         // TODO: использовать es6 options= {}; babel не хочет дефолтные значений функции прописывать.
         options = _.extend({checkOnly: [], setOnError: false, forceAllRules: false, validateLogicRules: true}, options);
 
-        if (!this.schema || !this.validator){
-            throw new Error('ValidateModel need schema and validator');
+        if (!this.validator) {
+            throw new Error('ValidateModel need validator instance');
         }
 
-        //
-        validationErrorsObj = {}; // объект ошибок, {field:[errorMsg, errorMsg, ...], ...}
+        // сбор ошибок сюда, {field:[errorMsg, errorMsg, ...], ...}
+        validationErrorsObj = {};
 
         if (options.checkOnly.length > 0) {
             // валидация только переданных полей
@@ -63,7 +62,7 @@ module.exports = Backbone.Model.extend({
      * @private
      */
     _validateInput(value, fieldName, options) {
-        let errors = this.schema[fieldName] ? this.validator.validateInput(value, fieldName, options) : undefined;
+        let errors = this.validator.validateInput(value, fieldName, options);
         errors ? validationErrorsObj[fieldName] = errors : this.trigger('valid:field', fieldName);
         if (options.setOnError) {
             this.set(fieldName, value);
@@ -77,7 +76,7 @@ module.exports = Backbone.Model.extend({
      */
     _validateLogic(attrs, options) {
         _.each(attrs, (value, fieldName) => {
-            let errors = this.schema[fieldName] ? this.validator.validateLogic(attrs, fieldName, options) : undefined;
+            let errors = this.validator.validateLogic(attrs, fieldName, options);
             errors ? validationErrorsObj[fieldName] = errors : this.trigger('valid:field', fieldName);
         });
     }
