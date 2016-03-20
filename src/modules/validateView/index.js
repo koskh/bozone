@@ -1,7 +1,7 @@
 'use strict';
 
-const ValidateView = require('./view/index.view.js');
-const ValidateModel = require('./model/index.model.js');
+const ValidateView = require('./view/index.js');
+const ValidateModel = require('./model/index.js');
 
 var validateView = new ValidateView({
     el: '#validateView',
