@@ -3,77 +3,83 @@
 const _ = require('underscore');
 const helpers = require('./helpers');
 
+/**
+ * Валидатор. использует схему валидации, из которой забирает по имени поля стратегии валидации.
+ * @type {Validator}
+ */
+
 module.exports = Validator;
 
-function Validator() {
+function Validator(schema){
+    if (!schema) {
+        throw new Error('Validator need schema')
+    }
 
+    this.schema = schema;
 }
 
 const _p = Validator.prototype;
 
-_p.validateInput = function (value, field, schema, options) {
+/**
+ * ВАлидация ввода
+ * @param value
+ * @param field
+ * @param options
+ * @returns {*}
+ */
+_p.validateInput = function (value, field, options) {
     // без имени поля и схемы его валидации не позволяем вызывать валадаторы
-    if (!(field && schema[field])) {
+    if (!(field && this.schema[field])) {
         throw new Error('Validator.validateInput() need field and schema');
     }
 
     //ситуация с пустым значением, если разрешено пустое значение. не валидируем
     //const isEmpty = schema[field].required && schema[field].required.isEmpty || helpers.isEmptyString;
-    if (helpers.isEmptyValue(value) && !schema[field].required) {
+    if (helpers.isEmptyValue(value) && !this.schema[field].required) {
         return;
     }
 
     // ситуация с требованием заполненности.
-    const requireErrors = schema[field].required && this._checkRequired(value, field, schema, options);
+    const requireErrors = this.schema[field].required && this._checkRequired(value, field, options);
     if (requireErrors) {
         return requireErrors;
     }
 
     // ситуация с типом данных
-    const dataTypeErrors = schema[field].type && this._checkDataType(value, field, schema, options);
+    const dataTypeErrors = this.schema[field].type && this._checkDataType(value, field, options);
     if (dataTypeErrors) {
         return dataTypeErrors;
     }
 
     /* Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации*/
-    const ruleErrors = schema[field].inputRules && this._checkInputRules(value, field, schema, {forceAllRules: options.forceAllRules});
+    const ruleErrors = this.schema[field].inputRules && this._checkInputRules(value, field, {forceAllRules: options.forceAllRules});
     if (ruleErrors) {
         return ruleErrors;
     }
 };
 
-_p._checkRequired = function (value, field, schema, options) {
-    if (!(field && schema[field]) && schema[field].required) {
-        throw new Error('Validator.checkRequired() need field, schema and required field');
-    }
-
-    const isEmpty = schema[field].required.isEmpty || helpers.isEmptyValue;
-    const msg = schema[field].required.message || helpers.getMessage('emptyNotAllowed');
+_p._checkRequired = function (value, field,  options) {
+    const isEmpty = this.schema[field].required.isEmpty || helpers.isEmptyValue;
+    const msg = this.schema[field].required.message || helpers.getMessage('emptyNotAllowed');
 
     return isEmpty(value) ? [msg] : undefined;
 };
 
-_p._checkDataType = function (value, field, schema, options) {
-    if (!(field && schema[field] && schema[field].type)) {
-        throw new Error('Validator.checkDataType() need field, schema and type field');
-    }
-    const convert = schema[field].type.convert || helpers.noConvert;
-    const msg = schema[field].type.message || helpers.getMessage('dataTypeError');
+_p._checkDataType = function (value, field, options) {
+    const convert = this.schema[field].type.convert || helpers.noConvert;
+    const msg = this.schema[field].type.message || helpers.getMessage('dataTypeError');
 
     return _.isNaN(convert(value)) ? [msg] : undefined;
 };
 
-_p._checkInputRules = function (value, field, schema, options) {
-    if (!(field && schema[field] && schema[field].inputRules)) {
-        throw new Error('Validator.checkDataType() need field, schema and  inputRules field');
-    }
-
+_p._checkInputRules = function (value, field, options) {
+    //
     const answer = [];
 
-    const convert = schema[field].type && schema[field].type.convert || helpers.noConvert;
+    const convert = this.schema[field].type && this.schema[field].type.convert || helpers.noConvert;
     value = convert(value);
 
-    const inputRules = schema[field].inputRules; // массив-список правил валидации
+    const inputRules = this.schema[field].inputRules; // массив-список правил валидации
 
     for (let i = 0; i < inputRules.length; i++) {
         let rule = inputRules[i];
@@ -94,24 +100,23 @@ _p._checkInputRules = function (value, field, schema, options) {
  * Валидация логики
  * @param attrs Объект аттрибутов модели
  * @param field Имя поля текущей проверки
- * @param schema  Схема с правилами валидации
  * @param options
  * @returns {*}
  */
-_p.validateLogic = function (attrs, field, schema, options) { // schema для  упрощенного расширения логик-валидации
-    if (!(field && schema[field])) {
+_p.validateLogic = function (attrs, field, options) { // schema для  упрощенного расширения логик-валидации
+    if (!(field && this.schema[field])) {
         throw new Error('Validator.validateLogic() need field, schema and logicRules field');
     }
 
     /* Прогоняем по правилам логик- валидации*/
-    const logicErrors = schema[field].logicRules && this._checkLogicRules(attrs, field, schema);
+    const logicErrors = this.schema[field].logicRules && this._checkLogicRules(attrs, field);
     return logicErrors ? logicErrors : undefined;
 };
 
-_p._checkLogicRules = function(attrs, field, schema) {
+_p._checkLogicRules = function(attrs, field) {
     //
     const answer = [];
-    const logicRules = schema[field].logicRules; // массив-список правил валидации
+    const logicRules = this.schema[field].logicRules; // массив-список правил валидации
 
     for (let i = 0; i < logicRules.length; i++) {
         let rule = logicRules[i];
