@@ -37,7 +37,7 @@ module.exports = {
                 validate: function (attrs) {
                     return attrs.name >= attrs.surname;
                 },
-                message: 'Знечение поля NAME должно быть меньше или равно значению поля SURNAME'
+                message: 'Знечение поля NAME должно быть больше или равно значению поля SURNAME'
             }
         ]
     },

@@ -6,7 +6,7 @@ const core = require('../../core/index');
 const schema = require('./validationSchema');
 
 // Валидатор модели
-const Validator = require('../../validator/index');
+const Validator = require('../../core/validator/index');
 const validator = new Validator(schema);
 
 module.exports = core.ValidateModel.extend({
