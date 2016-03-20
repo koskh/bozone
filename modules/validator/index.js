@@ -51,7 +51,7 @@ _p.validateInput = function (value, field, options) {
         return dataTypeErrors;
     }
 
-    /* Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации*/
+    // Сконвертировать в требуемый тип удалось, прогоняем по правилам валидации
     const ruleErrors = this.schema[field].inputRules && this._checkInputRules(value, field, {forceAllRules: options.forceAllRules});
     if (ruleErrors) {
         return ruleErrors;

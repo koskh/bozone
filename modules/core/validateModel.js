@@ -2,8 +2,6 @@
 
 const _ = require('underscore');
 
-let validationErrorsObj = {};  // static singleton для сбора ошибок, {field:[errorMsg, errorMsg, ...], ...}
-
 module.exports = Backbone.Model.extend({
     /**
      * Стратегия валидации
@@ -32,21 +30,22 @@ module.exports = Backbone.Model.extend({
         }
 
         // сбор ошибок сюда, {field:[errorMsg, errorMsg, ...], ...}
-        validationErrorsObj = {};
+        let validationErrorsObj = {};
 
         if (options.checkOnly.length > 0) {
             // валидация только переданных полей
             _.each(options.checkOnly, (fieldName) => {
-                this._validateInput(attrs[fieldName], fieldName, options);
+                this._validateInput(attrs[fieldName], fieldName, validationErrorsObj, options);
             });
         } else {
             // валидация всех полей
             _.each(attrs, (value, fieldName) => {
-                this._validateInput(attrs[fieldName], fieldName, options);
+                this._validateInput(attrs[fieldName], fieldName, validationErrorsObj, options);
             });
+
             //валидация бизнесс логкики
             if (!_.keys(validationErrorsObj).length && options.validateLogicRules) {
-                this._validateLogic(attrs, options);
+                this._validateLogic(attrs, validationErrorsObj, options);
             }
         }
 
@@ -61,7 +60,7 @@ module.exports = Backbone.Model.extend({
      * @param options опции валидации
      * @private
      */
-    _validateInput(value, fieldName, options) {
+    _validateInput(value, fieldName, validationErrorsObj, options) {
         let errors = this.validator.validateInput(value, fieldName, options);
         errors ? validationErrorsObj[fieldName] = errors : this.trigger('valid:field', fieldName);
         if (options.setOnError) {
@@ -74,7 +73,7 @@ module.exports = Backbone.Model.extend({
      * @param options
      * @private
      */
-    _validateLogic(attrs, options) {
+    _validateLogic(attrs, validationErrorsObj, options) {
         _.each(attrs, (value, fieldName) => {
             let errors = this.validator.validateLogic(attrs, fieldName, options);
             errors ? validationErrorsObj[fieldName] = errors : this.trigger('valid:field', fieldName);
