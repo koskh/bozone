@@ -6,7 +6,7 @@
  * - как валидировать это значение
  */
 
-const extractFloat = require('../../utilities/number/extract');
+const extractFloat = require('../../../utilities/number/extract');
 
 module.exports = {
     'name': {

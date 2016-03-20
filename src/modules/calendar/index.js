@@ -1,6 +1,6 @@
 'use strict';
 
-var IndexView = require('./view/index.view');
+var IndexView = require('./view/index.view.js');
 
 var indexView = new IndexView({
     el: '#calendar'

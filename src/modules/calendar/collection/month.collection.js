@@ -1,6 +1,6 @@
 'use strict';
 
-var DayModel = require('../model/day.model');
+var DayModel = require('../model/day.model.js');
 
 module.exports = Backbone.Collection.extend({
 

@@ -5,10 +5,10 @@ var locale = window.locale || '[ru-RU]';
 
 //var MonthCollection = require('../collection/month.collection');
 
-var DayView = require('./day.view');
+var DayView = require('./day.view.js');
 var template = require('../template/index.ejs');
 
-var Month = require ('../collection/month.collection');
+var Month = require ('../collection/month.collection.js');
 var month = new Month();
 
 module.exports = Marionette.CompositeView.extend({
