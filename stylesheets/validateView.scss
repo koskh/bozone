@@ -1,9 +1,9 @@
 // компонент ввода с валидационным сообщением.
-.form-group {
+.form-field {
   margin-bottom: 15px;
 
   //Валидационное сообщение
-  & .form-error-helper {
+  & .form-field__tooltip--error {
     color: red;
     font-size: 80%;
   }

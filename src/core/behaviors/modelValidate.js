@@ -9,7 +9,9 @@ module.exports = Marionette.Behavior.extend({
     },
 
     initialize() {
-        //console.log('Behaver initialize.' + this.options.message);
+        //console.log('Behaver initialize.' + this.options);
+        this._behaviorState = {};
+        this._behaviorState.errorEl = this.options.errorEl; // куда выводить ошибку
     },
 
     /**
@@ -20,9 +22,14 @@ module.exports = Marionette.Behavior.extend({
      */
     _modelInvalidHandler(model, validationError) {
         _.each(validationError, (messages, field) => {
-            // TODO: вменяемая строка ошибки
-            this.ui[field].next().remove();
-            this.ui[field].after(`<span class ="form-error-helper">${messages.toString()}</span></span>`);
+            if (this._behaviorState.errorEl) {
+                this.ui[field].siblings(this._behaviorState.errorEl).html(messages.toString());
+            } else {
+                // TODO: вменяемая генерация строки ошибки
+                this.ui[field].next().remove();
+                this.ui[field].after(`<span class ="form-field__tooltip--error">${messages.toString()}</span></span>`);
+            }
+
         });
     },
 
@@ -32,7 +39,11 @@ module.exports = Marionette.Behavior.extend({
      * @private
      */
     _modelValidFieldHandler(field) {
-        //TODO: Вменяемый тултип об ошибке, требует вменяемой очистки
-        this.ui[field].next().remove();
+        if (this._behaviorState.errorEl) {
+            this.ui[field].siblings(this._behaviorState.errorEl).html('');
+        } else {
+            //TODO: Вменяемый тултип об ошибке, требует вменяемой очистки
+            this.ui[field].next().remove();
+        }
     }
 });

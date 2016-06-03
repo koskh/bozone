@@ -33,9 +33,9 @@ a {
   .calendar__day:nth-child(7n) {
     color: yellow; }
 
-.form-group {
+.form-field {
   margin-bottom: 15px; }
-  .form-group .form-error-helper {
+  .form-field .form-field__tooltip--error {
     color: red;
     font-size: 80%; }
 

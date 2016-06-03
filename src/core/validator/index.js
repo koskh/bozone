@@ -31,7 +31,7 @@ _p.validateInput = function (value, field, options) {
     //
     // ситуация отсутсвия правил валидации для этого поля
     if (!this.schema[field]) {
-        return undefined;
+        return;
     }
 
     //ситуация с пустым значением, если разрешено пустое значение. не валидируем

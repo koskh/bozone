@@ -27,6 +27,7 @@
     "$": true,
     "Backbone": true,
     "_": true,
-    "Marionette":true
+    "Marionette": true,
+    "require": true
   }
 }
