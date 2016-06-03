@@ -35,7 +35,7 @@
   "disallowSpacesInFunctionDeclaration": {
     "beforeOpeningRoundBrace": true
   },
-  "requireBlocksOnNewline": true,
+  "requireBlocksOnNewline": false,
   "disallowPaddingNewlinesInBlocks": true,
   "disallowEmptyBlocks": true,
   "disallowSpaceAfterObjectKeys": true,

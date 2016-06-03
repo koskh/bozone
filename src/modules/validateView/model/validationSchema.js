@@ -42,9 +42,12 @@ module.exports = {
         ]
     },
     'surname': {
-        //required: {
-        //
-        //},
+        required: {
+            isEmpty: function(value) {
+                return !value.trim().length;
+            },
+            message: 'не может быть пустым'
+        },
 
         type: {
             convert: function (value) {
