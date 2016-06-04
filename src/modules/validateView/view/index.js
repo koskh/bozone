@@ -14,7 +14,7 @@ module.exports = Marionette.ItemView.extend({
     behaviors: {
         oneWayBinding: {},
         modelValidate: {errorEl: '.js-form-field-error'},
-        inputHint: {hintEl: '.js-form-field-hint', hints: HINTS}
+        inputHint: {hintEl: '.js-form-field-hint', fields: HINTS}
     },
 
     ui: {
@@ -24,7 +24,7 @@ module.exports = Marionette.ItemView.extend({
     },
 
     events: {
-        'change @ui.name,@ui.surname,@ui.email': '_inputFormHandler',
+        'keyup @ui.name,@ui.surname,@ui.email ': '_inputFormHandler',
         // 'focus @ui.name,@ui.surname,@ui.email': '_inputFocusHandler'
     },
 

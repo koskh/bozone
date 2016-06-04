@@ -2,13 +2,14 @@
 const _ = require('underscore');
 
 /*
-    При фокусироввке на Input поле подсказывает подсказку
+    При фокусироввке на Input поле подсказывает подсказку.
+    Если поле имеет  данные в "классе - ошибки",  не показывает подсказку.
  */
 
 module.exports = Marionette.Behavior.extend({
 
     events() {
-        let inputs = _.keys(this._behaviorState.hints);
+        let inputs = _.keys(this._behaviorState.fields);
         let ui = _.map(inputs, (value) => {return '@ui.' + value;});
         ui = ui.join(',');
 
@@ -20,11 +21,11 @@ module.exports = Marionette.Behavior.extend({
     },
 
     initialize() {
-        //console.log('Behaver initialize.' + this.options);
+
         this._behaviorState = {};
         this._behaviorState.hintEl = this.options.hintEl || '.js-form-field-hint'; // куда выводить подсказку
         this._behaviorState.errorEl = this.options.errorEl || '.js-form-field-error'; // соглашение о классе ошибки
-        this._behaviorState.hints = this.options.hints;
+        this._behaviorState.fields = this.options.fields;
     },
 
     /**
@@ -34,7 +35,11 @@ module.exports = Marionette.Behavior.extend({
      */
     _inputFocusHandler(event) {
         const name = event.currentTarget.name;
-        this.ui[name].siblings(this._behaviorState.hintEl).html(this._behaviorState.hints[name]);
+        this.ui[name].siblings(this._behaviorState.hintEl).html(this._behaviorState.fields[name]);
+        // подсказка есть всегда, но если  есть ошибка, то подсказку нужно скрыть и показать позже, когда ошибка уйдет
+        if (this.ui[name].siblings(this._behaviorState.errorEl).html()) {
+            this.ui[name].siblings(this._behaviorState.hintEl).hide();
+        }
     },
 
     /**
