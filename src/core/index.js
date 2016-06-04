@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-  ValidateModel: require('./validateModel')
+  ValidateModel: require('./validateModel'),
+  ValidateFilledModel: require('./validateFilledModel')
 };

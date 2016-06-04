@@ -9,7 +9,7 @@ const schema = require('./validationSchema');
 const Validator = require('../../../core/validator/index');
 const validator = new Validator(schema);
 
-module.exports = core.ValidateModel.extend({
+module.exports = core.ValidateFilledModel.extend({
     defaults: {
         name: '',
         surname: '',

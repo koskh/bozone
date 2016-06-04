@@ -17,6 +17,11 @@ module.exports = Marionette.ItemView.extend({
         inputHint: {hintEl: '.js-form-field-hint', fields: HINTS}
     },
 
+    modelEvents: {
+      'change': '_modelChangeHandler'
+
+    },
+
     ui: {
         'name': '[name="name"]',
         'surname': '[name="surname"]',
@@ -43,5 +48,10 @@ module.exports = Marionette.ItemView.extend({
 
         //валидируем только одно поле и решаем, устанавливать в модель или нет.
         //this.model.set(name, value, {validate: true, checkOnly:[name], setOnError: true, forceAllRules: true});
+    },
+
+    _modelChangeHandler(){
+            console.log(this.model.isFilled());
+            // debugger;
     }
 });
