@@ -24,8 +24,8 @@ module.exports = Marionette.ItemView.extend({
     },
 
     events: {
-        'keyup @ui.surname,@ui.email ': '_inputFormHandler',
-        'change @ui.name': '_inputFormHandler'
+        'keyup @ui.name,@ui.surname,@ui.email ': '_inputFormHandler'
+        // 'change @ui.name': '_inputFormHandler'
     },
 
     /*

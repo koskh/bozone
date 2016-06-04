@@ -29,6 +29,12 @@ module.exports = {
                     return value >= 0 && value <= 100;
                 },
                 message: 'Число должно находиться в интервале 0-100'
+            },
+            {
+                validate: function (value) {
+                    return value >= 50;
+                },
+                message: 'Число должно быть больше 50'
             }
         ],
 
