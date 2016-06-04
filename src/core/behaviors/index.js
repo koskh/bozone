@@ -4,7 +4,7 @@
 
 const Behaviours = {
     oneWayBinding: require('./oneWayBinding'), // one way data binding, from model to view
-    modelValidate: require('./modelValidate'), // behaviour on  this.model.event 'invalid'
+    inputValidate: require('./inputValidate'), // behaviour on  this.model.event 'invalid'
     inputHint: require('./inputHint') // behaviour on  this.model.event 'invalid'
 };
 

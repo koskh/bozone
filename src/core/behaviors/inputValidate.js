@@ -7,6 +7,19 @@ module.exports = Marionette.Behavior.extend({
         'invalid': '_modelInvalidHandler', // инвалидными могут стать сразу несколько полей
         'valid:field': '_modelValidFieldHandler' // а валидными только по одному
     },
+    // name: 'keyup',
+    events() {
+        let inputs = _.keys(this._behaviorState.fields);
+        // let ui = _.map(inputs, (value) => {return '@ui.' + value;});
+        // ui = ui.join(',');
+
+        let eventsHash = {};
+        _.each(inputs, (input) => {
+            eventsHash[`${this._behaviorState.fields[input]} [name=${input}]`] = '_inputFormHandler';
+        });
+
+        return eventsHash;
+    },
 
     initialize() {
         //console.log('Behaver initialize.' + this.options);

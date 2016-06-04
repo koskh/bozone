@@ -6,14 +6,14 @@ const HINTS = {
     name: 'Ваше имя',
     surname: 'Ваше сурнаме',
     email: 'Почтовый ящик для сообщений'
-}
+};
 
 module.exports = Marionette.ItemView.extend({
     template: template,
 
     behaviors: {
         oneWayBinding: {},
-        modelValidate: {errorEl: '.js-form-field-error'},
+        inputValidate: {errorEl: '.js-form-field-error'},
         inputHint: {hintEl: '.js-form-field-hint', fields: HINTS}
     },
 
@@ -24,10 +24,15 @@ module.exports = Marionette.ItemView.extend({
     },
 
     events: {
-        'keyup @ui.name,@ui.surname,@ui.email ': '_inputFormHandler',
-        // 'focus @ui.name,@ui.surname,@ui.email': '_inputFocusHandler'
+        'keyup @ui.surname,@ui.email ': '_inputFormHandler',
+        'change @ui.name': '_inputFormHandler'
     },
 
+    /*
+     В этом методе происходит магия связывания значения поля и его проверки.
+     У каждого поля своя магия. Сявзь поле-тип проверки настраиваются раздельно для каждого поля.
+     Если у тебя 20 полей в одной вьюхе и ты задумался о получившейся портянке - "что то пошло не так".
+     */
     _inputFormHandler(e) {
         //
         const name = e.currentTarget.name;
